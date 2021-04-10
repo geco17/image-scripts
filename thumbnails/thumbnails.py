@@ -13,8 +13,55 @@ def thumbnails(src_dir, dest_dir, max_size):
             print(f'[skip] directory: {f}')
 
 
+# create thumbnails for all images in directory (not recursive)
+def thumbnails_exact(src_dir, dest_dir, max_size):
+    files = os.listdir(src_dir)
+    for name in files:
+        f = os.path.join(src_dir, name)
+        if os.path.isfile(f):
+            thumbnail_exact(f, dest_dir, max_size)
+        else:
+            print(f'[skip] directory: {f}')
+
+
+def thumbnail_exact(src_file, dest_dir, requested_size):
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
+    dest_file = __dest_thumbnail_file(src_file, dest_dir)
+    print(f'dest file: {dest_file}')
+    im = Image.open(src_file)
+    orig_w, orig_h = im.size
+    w, h = requested_size
+    print(f'orig w {orig_w} orig h {orig_h} req width {w} req h {h}')
+    if orig_w < w or orig_h < h:
+        raise Exception(f'original dimensions {orig_w}x{orig_h} not valid for thumbnail dimensions {w}x{h}')
+    requested_ratio = w / h
+    actual_ratio = orig_w / orig_h
+    print(f'actual ratio {actual_ratio} requested ratio {requested_ratio}')
+    diff = requested_ratio / actual_ratio
+    if diff == 1:
+        print('aspect ratios equal')
+        new_im = im
+    else:
+        if diff > 1:
+            # the requested image will be wider than the image we have to work with
+            # therefore we need to crop height-wise and then resize
+            crop_h = orig_h / diff
+            print(f'crop height from {orig_h} to {crop_h}')
+            new_im = im.crop((0, 0, orig_w, crop_h))
+        else:
+            # the requested image will be narrower than the image we have to work with
+            # therefore we need to crop width-wise and then resize
+            crop_w = orig_w * diff
+            print(f'crop width from {orig_w} to {crop_w}')
+            new_im = im.crop((0, 0, crop_w, orig_h))
+    new_im = new_im.resize((w, h))
+    new_im.save(dest_file)
+
+
 # create a thumbnail for the given image in the destination directory
 def thumbnail(src_file, dest_dir, max_size):
+    print(f'Thumbnail')
     print(f'Source file: {src_file}')
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
