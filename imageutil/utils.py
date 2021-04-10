@@ -32,12 +32,12 @@ def thumbnails(src_dir, dest_dir, max_size):
 
 
 # create thumbnails for all images in directory (not recursive)
-def thumbnails_exact(src_dir, dest_dir, max_size):
+def thumbnails_exact(src_dir, dest_dir, requested_size):
     files = os.listdir(src_dir)
     for name in files:
         f = os.path.join(src_dir, name)
         if __is_image(f):
-            thumbnail_exact(f, dest_dir, max_size)
+            thumbnail_exact(f, dest_dir, requested_size)
         else:
             print(f'[skip] directory: {f}')
 
