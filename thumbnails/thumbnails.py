@@ -1,5 +1,23 @@
 from PIL import Image
 import os
+import filetype
+
+
+# create webp for all images in directory (not recursive)
+def webps(src_dir, dest_dir):
+    files = os.listdir(src_dir)
+    for name in files:
+        f = os.path.join(src_dir, name)
+        if __is_image(f):
+            webp(f, dest_dir)
+
+
+# create a single webp image
+def webp(file, dest_dir):
+    im = Image.open(file)
+    im = im.convert('RGB')
+    dest_file = __dest_webp_file(file, dest_dir)
+    im.save(dest_file)
 
 
 # create thumbnails for all images in directory (not recursive)
@@ -7,7 +25,7 @@ def thumbnails(src_dir, dest_dir, max_size):
     files = os.listdir(src_dir)
     for name in files:
         f = os.path.join(src_dir, name)
-        if os.path.isfile(f):
+        if __is_image(f):
             thumbnail(f, dest_dir, max_size)
         else:
             print(f'[skip] directory: {f}')
@@ -18,7 +36,7 @@ def thumbnails_exact(src_dir, dest_dir, max_size):
     files = os.listdir(src_dir)
     for name in files:
         f = os.path.join(src_dir, name)
-        if os.path.isfile(f):
+        if __is_image(f):
             thumbnail_exact(f, dest_dir, max_size)
         else:
             print(f'[skip] directory: {f}')
@@ -76,10 +94,22 @@ def thumbnail(src_file, dest_dir, max_size):
     im.save(dest_file)
 
 
-# helper method to get thumbnail argument size
+# helper method to get thumbnail file name
 def __dest_thumbnail_file(src_file, dest_dir):
     pieces = os.path.splitext(os.path.basename(src_file))
     no_ext = pieces[0]
     ext = pieces[1]
     dest_file = f'{dest_dir}{os.path.sep}{no_ext}-thumbnail{ext}'
     return dest_file
+
+
+# helper method to get webp file name
+def __dest_webp_file(src_file, dest_dir):
+    pieces = os.path.splitext(os.path.basename(src_file))
+    no_ext = pieces[0]
+    dest_file = f'{dest_dir}{os.path.sep}{no_ext}.webp'
+    return dest_file
+
+
+def __is_image(file):
+    return os.path.isfile(file) and filetype.is_image(file)
