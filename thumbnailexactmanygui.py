@@ -19,6 +19,7 @@ class ThumbnailExactManyGui:
         row = 1
         self.root = tk.Tk()
         self.root.geometry('265x380')
+        self.root.resizable(0, 0)
         self.root.title('Thumbnail Exact Many')
         self.src_label = tk.Label(self.root, text='Source directory').place(x=unit, y=unit * row)
         row += 2
