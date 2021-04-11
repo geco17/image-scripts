@@ -18,23 +18,24 @@ class WebPManyGui:
         unit = 15
         row = 1
         self.root = tk.Tk()
-        self.root.geometry('200x215')
+        self.root.geometry('265x215')
         self.root.title('WebP Many')
+        self.root.resizable(0, 0)
         self.src_label = tk.Label(self.root, text='Source directory').place(x=unit, y=unit * row)
         row += 2
         self.src_dir_val = tk.StringVar()
         self.src_dir = tk.Entry(self.root, textvariable=self.src_dir_val)
-        self.src_dir.place(x=unit, y=unit * row)
+        self.src_dir.place(x=unit, y=unit * row, width=200, height=25)
         self.src_button = tk.Button(self.root, text='...', command=self.choose_src)
-        self.src_button.place(x=unit * 10, y=unit * row)
+        self.src_button.place(x=unit * 15, y=unit * row)
         row += 3
         self.dest_label = tk.Label(self.root, text='Destination directory').place(x=unit, y=unit * row)
         row += 2
         self.dest_dir_val = tk.StringVar()
         self.dest_dir = tk.Entry(self.root, textvariable=self.dest_dir_val)
-        self.dest_dir.place(x=unit, y=unit * row)
+        self.dest_dir.place(x=unit, y=unit * row, width=200, height=25)
         self.dest_button = tk.Button(self.root, text='...', command=self.choose_dest)
-        self.dest_button.place(x=unit * 10, y=unit * row)
+        self.dest_button.place(x=unit * 15, y=unit * row)
         row += 3
         self.create_button = tk.Button(self.root, text='Create', command=self.create_webp_many)
         self.create_button.place(x=unit, y=unit * row)

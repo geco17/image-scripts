@@ -1,3 +1,5 @@
+import imghdr
+
 from PIL import Image
 import os
 import filetype
@@ -8,7 +10,7 @@ def webps(src_dir, dest_dir):
     files = os.listdir(src_dir)
     for name in files:
         f = os.path.join(src_dir, name)
-        if __is_image(f):
+        if __is_image(f) and not imghdr.what(f) == 'webp':
             webp(f, dest_dir)
 
 

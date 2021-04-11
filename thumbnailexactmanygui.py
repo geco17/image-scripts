@@ -18,35 +18,35 @@ class ThumbnailExactManyGui:
         unit = 15
         row = 1
         self.root = tk.Tk()
-        self.root.geometry('200x380')
+        self.root.geometry('265x380')
         self.root.title('Thumbnail Exact Many')
         self.src_label = tk.Label(self.root, text='Source directory').place(x=unit, y=unit * row)
         row += 2
         self.src_dir_val = tk.StringVar()
         self.src_dir = tk.Entry(self.root, textvariable=self.src_dir_val)
-        self.src_dir.place(x=unit, y=unit * row)
+        self.src_dir.place(x=unit, y=unit * row, width=200, height=25)
         self.src_button = tk.Button(self.root, text='...', command=self.choose_src)
-        self.src_button.place(x=unit * 10, y=unit * row)
+        self.src_button.place(x=unit * 15, y=unit * row)
         row += 3
         self.dest_label = tk.Label(self.root, text='Destination directory').place(x=unit, y=unit * row)
         row += 2
         self.dest_dir_val = tk.StringVar()
         self.dest_dir = tk.Entry(self.root, textvariable=self.dest_dir_val)
-        self.dest_dir.place(x=unit, y=unit * row)
+        self.dest_dir.place(x=unit, y=unit * row, width=200, height=25)
         self.dest_button = tk.Button(self.root, text='...', command=self.choose_dest)
-        self.dest_button.place(x=unit * 10, y=unit * row)
+        self.dest_button.place(x=unit * 15, y=unit * row)
         row += 3
         self.width_label = tk.Label(self.root, text='Width').place(x=unit, y=unit * row)
         row += 2
         self.width_val = tk.StringVar()
         self.width = tk.Entry(self.root, textvariable=self.width_val)
-        self.width.place(x=unit, y=unit * row)
+        self.width.place(x=unit, y=unit * row, width=100, height=25)
         row += 3
         self.height_label = tk.Label(self.root, text='Height').place(x=unit, y=unit * row)
         row += 2
         self.height_val = tk.StringVar()
         self.height = tk.Entry(self.root, textvariable=self.height_val)
-        self.height.place(x=unit, y=unit * row)
+        self.height.place(x=unit, y=unit * row, width=100, height=25)
         row += 3
         self.create_button = tk.Button(self.root, text='Create', command=self.create_thumbnail_exact_many)
         self.create_button.place(x=unit, y=unit * row)
